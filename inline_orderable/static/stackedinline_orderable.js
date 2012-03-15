@@ -1,35 +1,38 @@
 (function($) {
-    var StackedInlineOrdering = {
-        inlineGroupSel: 'div.inline-group',
-        inlineItemsSel: 'div.inline-related',
-        
-        init: function() {
-            var that = this;
-            $(document).ready(function() {
-                var inlineGroup = $(that.inlineGroupSel);
-                
+    $.fn.stackedInlineOrder = function(options) {
+            var opts = $.extend({}, $.fn.stackedInlineOrder.defaults, options);
+
+            return this.each(function() {
+                var inlineGroup = $(this);
+
                 inlineGroup.sortable({
-                    items: that.inlineItemsSel,
+                    items: opts.inlineItemsSel,
                     handle: 'h3:first',
                     update: function() {
-                        updateOrdering(that);
+                        updateOrdering(inlineGroup.find(opts.inlineItemsSel));
                     }
                 });
-        
+
                 // cursor move
-                inlineGroup.find(that.inlineItemsSel).css('cursor', 'move');
-                
+                inlineGroup.find(opts.inlineItemsSel).css('cursor', 'move');
+
                 // hiding stuff
-                inlineGroup.find(that.inlineItemsSel).find('input[id$=order]').parents('div.order').hide();
-                
+                inlineGroup.find(opts.inlineItemsSel).find('input[id$=order]').parents('div.order').hide();
+
                 // catching submit event
                 $('form').submit(function() {
-                    updateOrdering(that);
+                    updateOrdering(inlineGroup.find(opts.inlineItemsSel));
                 });
             });
-        }
-    }
+        };
     
-    StackedInlineOrdering.init();
+    $.fn.stackedInlineOrder.defaults = {
+            'inlineItemsSel': 'div.inline-related'
+        };
+
+
+    $(document).ready(function() {
+        $('div.inline-group').stackedInlineOrder();
+    });
     
 })($ || django.jQuery);

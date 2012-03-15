@@ -1,23 +1,20 @@
 (function($) {
-    var TabularInlineOrdering = {
-        inlineGroupSel: 'div.inline-group',
-        inlineItemsSel: 'tbody tr',
-        
-        init: function() {
-            var that = this;
-            $(document).ready(function() {
-                var inlineGroup = $(that.inlineGroupSel);
+    $.fn.tabularInlineOrder = function(options) {
+            var opts = $.extend({}, $.fn.tabularInlineOrder.defaults, options);
+
+            return this.each(function() {
+                var inlineGroup = $(this);
                 
                 inlineGroup.sortable({
-                    items: that.inlineItemsSel,
+                    items: opts.inlineItemsSel,
                     handle: 'td',
                     update: function() {
-                        updateOrdering(that);
+                        updateOrdering(inlineGroup.find(opts.inlineItemsSel));
                     }
                 });
         
                 // cursor move
-                inlineGroup.find(that.inlineItemsSel).css('cursor', 'move');
+                inlineGroup.find(opts.inlineItemsSel).css('cursor', 'move');
         
                 // finding header of order
                 var orderHeaderIndex = inlineGroup.find('td.order:first').index()-1,
@@ -35,12 +32,17 @@
                 
                 // catching submit event
                 $('form').submit(function() {
-                    updateOrdering(that);
+                    updateOrdering(inlineGroup.find(opts.inlineItemsSel));
                 });
             });
-        }
-    }
+        };
     
-    TabularInlineOrdering.init();
+    $.fn.tabularInlineOrder.defaults = {
+            'inlineItemsSel': 'tbody tr'
+        };
     
+    
+    $(document).ready(function() {
+        $('div.inline-group').tabularInlineOrder();
+    });
 })($ || django.jQuery);
