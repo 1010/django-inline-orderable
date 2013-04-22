@@ -50,14 +50,14 @@ Include jQuery and jQuery.ui
     	
 		class Media:
 			js = (
-				'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
-				'http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js',
+				'//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
+				'//ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js',
 			)
 
 
 ### Step 4 (optional)
 
-django-inline-orderable uses staticfiles available from Django 1.3.
+django-inline-orderable uses staticfiles available from Django 1.3+.
 
 If you're using Django 1.2 just copy the media files to your `MEDIA_ROOT`.
 
