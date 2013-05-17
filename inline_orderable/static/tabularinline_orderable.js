@@ -22,13 +22,13 @@
                 inlineGroup.find(opts.inlineItemsSel).find('td').not('.handle').css('cursor', 'inherit');
         
                 // finding header of order
-                var orderHeaderIndex = inlineGroup.find('td.order:first').index()-1,
+                var orderHeaderIndex = inlineGroup.find('input[id$=order]').index()+1,
                     orderTheadTH = inlineGroup.find('thead th:eq('+orderHeaderIndex+')'),
                     orderTheadTHColspan = parseInt(orderTheadTH.attr('colspan') || 1);
                 
                 // hiding stuff
                 if (orderTheadTHColspan == 2) {
-                    orderTheadTH.attr('colspan', orderTheadTHColspan-1);
+                    orderTheadTH.attr('colspan', 1);
                     orderTheadTH.text('');
                 } else {
                     orderTheadTH.hide();
